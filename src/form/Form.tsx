@@ -1,4 +1,10 @@
-import { Button, Grid, TextField, Typography } from "@material-ui/core";
+import {
+  Button,
+  Grid,
+  makeStyles,
+  TextField,
+  Typography,
+} from "@material-ui/core";
 import React, { Fragment, useState, useEffect } from "react";
 
 type error =
@@ -10,10 +16,19 @@ type error =
 
 type errors = Record<"email" | "name", error>;
 
+const useStyles = makeStyles({
+  successText: {
+    color: "#0bab31",
+  },
+});
+
 const Form = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [errors, setErrors] = useState<errors>();
+  const [success, setSuccess] = useState(false);
+
+  const classes = useStyles({});
 
   //   email validation
   useEffect(() => {
@@ -44,14 +59,15 @@ const Form = () => {
   }, [name, errors?.email]);
 
   const attemptSubmission = () => {
-    console.log("submitting");
-    if (!name || !email || errors?.email || errors?.name) {
+    if (!name || !email || errors?.email || errors?.name || success) {
       console.error(errors);
       return;
     }
     // https://github.com/jamiewilson/form-to-google-sheets
     const SCRIPT_URL =
       "https://script.google.com/macros/s/AKfycbyCYjH-lt05EhFE-FBvvro8neh9Mc6DHOj8pMSVgmv2eoVedL6bEvqBiU-nwIDmG0MVlw/exec";
+
+    setSuccess(true);
 
     // create form data to integrate with google sheets
     const form = new FormData();
@@ -62,7 +78,9 @@ const Form = () => {
       method: "POST",
       body: form,
     })
-      .then((response) => console.log("Success!", response))
+      .then((response) => {
+        console.log("Success!", response);
+      })
       .catch((error) => console.error("Error!", error.message));
   };
 
@@ -86,6 +104,13 @@ const Form = () => {
           <Typography color="error">{errors?.name?.message}</Typography>
         </Grid>
       </Grid>
+      {success && (
+        <Grid item xs={12}>
+          <Typography className={classes.successText} variant="h6">
+            Thanks! We'll stay in touch!
+          </Typography>
+        </Grid>
+      )}
       <Grid item xs={12}>
         <Button variant="contained" color="primary" onClick={attemptSubmission}>
           Submit
