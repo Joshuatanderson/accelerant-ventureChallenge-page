@@ -28,7 +28,7 @@ const Form = () => {
       name: errors?.name,
       email: { type: "email", message: errorMessage },
     });
-  }, [email]);
+  }, [email, errors?.name]);
 
   //   email validation
   useEffect(() => {
@@ -41,7 +41,7 @@ const Form = () => {
       email: errors?.email,
       name: { type: "name", message: errorMessage },
     });
-  }, [name]);
+  }, [name, errors?.email]);
 
   const attemptSubmission = () => {
     console.log("submitting");
