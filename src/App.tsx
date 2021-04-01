@@ -14,6 +14,7 @@ import {
 import { theme } from "./theme";
 import Header from "./header/Header";
 import classes from "*.module.css";
+import Form from "./form/Form";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,17 +47,7 @@ function App() {
             <Grid item xs={12}>
               <Typography variant="h5">Get in touch:</Typography>
             </Grid>
-            <Grid container item spacing={3}>
-              <Grid item sm={4}>
-                <TextField label="Email"></TextField>
-              </Grid>
-              <Grid item sm={4}>
-                <TextField label="Name"></TextField>
-              </Grid>
-            </Grid>
-            <Grid item xs={12}>
-              <Button variant="contained" color="primary">Submit</Button>
-            </Grid>
+            <Form />
           </Grid>
         </Container>
       </ThemeProvider>

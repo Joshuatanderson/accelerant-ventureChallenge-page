@@ -14,7 +14,7 @@ const Header = () => {
   return (
     <Toolbar>
       <header className="App-header">
-        <h1 className={classes.headerText}>Accelerant</h1>
+        <h1 className={classes.headerText}>&#x0003C;Accelerant&#x0003E;</h1>
       </header>
     </Toolbar>
   );
